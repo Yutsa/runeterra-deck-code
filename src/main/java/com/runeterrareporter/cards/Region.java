@@ -2,6 +2,12 @@ package com.runeterrareporter.cards;
 
 import java.util.Arrays;
 
+/**
+ * Representation of every region in the game.
+ * <p>
+ * Each region is encoded with a two letters acronym and each region has a minimum compatible version for the deck code
+ * format.
+ */
 public enum Region {
   DEMACIA("DE", 0, "Demacia", 1),
   FRELJORD("FR", 1, "Freljord", 1),

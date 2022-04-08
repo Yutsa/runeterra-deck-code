@@ -1,12 +1,13 @@
 package com.runeterrareporter.decks;
 
-import com.runeterrareporter.cards.Card;
-import com.runeterrareporter.cards.Region;
-import com.runeterrareporter.encoding.DeckEncoder;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.runeterrareporter.cards.*;
+
+/**
+ * Class representing a deck made of different {@link CardCopies cards in 1, 2 or 3 copies}.
+ */
 public class Deck {
 
   private final List<CardCopies> cards = new ArrayList<>();
@@ -14,7 +15,7 @@ public class Deck {
   public void addCard(final List<CardCopies> cardCopies) {
     cards.addAll(cardCopies);
   }
-  
+
   public void addCard(final CardCopies... cardCopies) {
     cards.addAll(Arrays.asList(cardCopies));
   }
@@ -23,14 +24,23 @@ public class Deck {
     return cards;
   }
 
+  /**
+   * @return All the cards in 1 copy.
+   */
   public List<Card> oneOfs() {
     return retrieveCardsInXCopies(1);
   }
 
+  /**
+   * @return All the cards in 2 copies.
+   */
   public List<Card> twoOfs() {
     return retrieveCardsInXCopies(2);
   }
 
+  /**
+   * @return All the cards in 3 copies.
+   */
   public List<Card> threeOfs() {
     return retrieveCardsInXCopies(3);
   }
@@ -39,27 +49,33 @@ public class Deck {
     return cards.stream()
                 .filter(cardCopies -> cardCopies.getNumberOfCopies() == copies)
                 .map(CardCopies::getCard)
-                .collect(Collectors.toList());
+                .toList();
   }
 
+  /**
+   * @return The different regions used in the deck.
+   */
   public Set<Region> getRegions() {
     return cards
-            .stream()
-            .map(CardCopies::getCard)
-            .map(Card::getRegion)
-            .collect(Collectors.toSet());
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof Deck)) return false;
-    Deck deck = (Deck) o;
-    return cards.equals(deck.cards);
+      .stream()
+      .map(CardCopies::getCard)
+      .map(Card::getRegion)
+      .collect(Collectors.toSet());
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(cards);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Deck deck)) {
+      return false;
+    }
+    return cards.equals(deck.cards);
   }
 }

@@ -2,6 +2,9 @@ package com.runeterrareporter.cards;
 
 import java.util.Arrays;
 
+/**
+ * Representation of each release set. Each release set is encoded by a two digits number.
+ */
 public enum ReleaseSet {
   FOUNDATION("01", 1),
   RISING_TIDES("02", 2),

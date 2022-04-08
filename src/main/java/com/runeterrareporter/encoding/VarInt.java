@@ -7,17 +7,17 @@ import java.util.stream.Collectors;
 
 class VarInt {
 
-    private static final int allButMSB = 0x7f;
-    private static final int justMSB = 0x80;
+    private static final int ALL_BUT_MSB = 0x7f;
+    private static final int JUST_MSB = 0x80;
 
-    private final List<Integer> varint;
+    private final List<Integer> internalVarInt;
 
     public VarInt() {
-        varint = new ArrayList<>();
+        internalVarInt = new ArrayList<>();
     }
 
     public VarInt(List<Integer> varint) {
-        this.varint = varint;
+        this.internalVarInt = varint;
     }
 
     public void add(int number) {
@@ -32,7 +32,7 @@ class VarInt {
             result.addAll(List.of(number, count));
         }
 
-        varint.addAll(result);
+        internalVarInt.addAll(result);
     }
 
     public int pop() {
@@ -40,13 +40,13 @@ class VarInt {
         int shift = 0;
         int popped = 0;
 
-        for (int i = 0; i < varint.size(); i++) {
+        for (int i = 0; i < internalVarInt.size(); i++) {
             popped++;
-            int current = varint.get(i) & allButMSB;
+            int current = internalVarInt.get(i) & ALL_BUT_MSB;
             result |= current << shift;
 
-            if ((varint.get(i) & justMSB) != justMSB) {
-                varint.subList(0, popped).clear();
+            if ((internalVarInt.get(i) & JUST_MSB) != JUST_MSB) {
+                internalVarInt.subList(0, popped).clear();
                 return result;
             }
 
@@ -57,13 +57,13 @@ class VarInt {
     }
 
     public List<Integer> getValues() {
-        return varint;
+        return internalVarInt;
     }
 
     @Override
     public String toString() {
-        return varint.stream()
-                .map(Objects::toString)
-                .collect(Collectors.joining(","));
+        return internalVarInt.stream()
+                             .map(Objects::toString)
+                             .collect(Collectors.joining(","));
     }
 }

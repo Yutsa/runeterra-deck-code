@@ -1,6 +1,6 @@
 package com.runeterrareporter.encoding;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -10,7 +10,7 @@ import com.runeterrareporter.decks.*;
 class DeckVarintEncoder {
 
   private final DeckSorter deckSorter;
-  private VarInt varInt = new VarInt();
+  private VarInt varInt;
 
   public DeckVarintEncoder(DeckSorter deckSorter) {
     this.deckSorter = deckSorter;
@@ -53,17 +53,17 @@ class DeckVarintEncoder {
     cardGroup.getCards().forEach(card -> varInt.add(card.getCardNumber()));
   }
 
-  public Deck decode(ArrayList<Integer> bytes) {
+  public Deck decode(List<Integer> bytes) {
     Deck deck = new Deck();
-    VarInt varInt = new VarInt(bytes);
-    int formatAndVersion = varInt.pop();
+    varInt = new VarInt(bytes);
+    varInt.pop();
     decodeXOfs(varInt, deck, 3);
     decodeXOfs(varInt, deck, 2);
     decodeXOfs(varInt, deck, 1);
     return deck;
   }
 
-  private void decodeXOfs(VarInt varInt, Deck deck, int XOfs) {
+  private void decodeXOfs(VarInt varInt, Deck deck, int xOfs) {
     int numberOfSetRegionGroups = varInt.pop();
     for (int i = 0; i < numberOfSetRegionGroups; i++) {
       int numberOfCards = varInt.pop();
@@ -71,7 +71,7 @@ class DeckVarintEncoder {
       String regionId = formatRegionId(varInt.pop());
       for (int j = 0; j < numberOfCards; j++) {
         String cardCode = formatCardCode(varInt.pop());
-        deck.addCard(new CardCopies(XOfs, Card.fromCode(releaseSetId + regionId + cardCode)));
+        deck.addCard(new CardCopies(xOfs, Card.fromCode(releaseSetId + regionId + cardCode)));
       }
     }
   }
