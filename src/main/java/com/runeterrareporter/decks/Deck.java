@@ -83,12 +83,22 @@ public class Deck {
     return cards.equals(deck.cards);
   }
 
+  @Override
+  public String toString() {
+    return "Deck{" +
+           "cards=" + cards +
+           '}';
+  }
+
   /**
    * Builder to easily create a {@link Deck} instance.
    */
   public static class DeckBuilder {
 
     private final Deck deck = new Deck();
+
+    private DeckBuilder() {
+    }
 
     /**
      * Adds a card to the {@link Deck deck} being built with the card code.
