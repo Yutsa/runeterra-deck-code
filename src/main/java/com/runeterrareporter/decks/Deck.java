@@ -12,6 +12,10 @@ public class Deck {
 
   private final List<CardCopies> cards = new ArrayList<>();
 
+  public static DeckBuilder builder() {
+    return new DeckBuilder();
+  }
+
   public void addCard(final List<CardCopies> cardCopies) {
     cards.addAll(cardCopies);
   }
@@ -77,5 +81,44 @@ public class Deck {
       return false;
     }
     return cards.equals(deck.cards);
+  }
+
+  /**
+   * Builder to easily create a {@link Deck} instance.
+   */
+  public static class DeckBuilder {
+
+    private final Deck deck = new Deck();
+
+    /**
+     * Adds a card to the {@link Deck deck} being built with the card code.
+     *
+     * @param cardCode The code from a card.
+     * @param copies   The amount of copies of the card.
+     * @return the current builder instance.
+     */
+    public DeckBuilder addCard(String cardCode, int copies) {
+      deck.addCard(new CardCopies(copies, Card.fromCode(cardCode)));
+      return this;
+    }
+
+    /**
+     * Adds a card to the {@link Deck deck} being built.
+     *
+     * @param card   The {@link Card card} to add to the deck.
+     * @param copies The amount of copies of the card.
+     * @return the current builder instance.
+     */
+    public DeckBuilder addCard(Card card, int copies) {
+      deck.addCard(new CardCopies(copies, card));
+      return this;
+    }
+
+    /**
+     * @return The deck with all the cards that were added.
+     */
+    public Deck build() {
+      return deck;
+    }
   }
 }
