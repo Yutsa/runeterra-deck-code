@@ -2,7 +2,8 @@ package com.runeterrareporter.cards;
 
 import java.util.Objects;
 
-import org.apache.commons.lang.StringUtils;
+import com.runeterrareporter.utils.StringUtils;
+
 
 /**
  * Representation of a card with its release set, region and the ID of the card.

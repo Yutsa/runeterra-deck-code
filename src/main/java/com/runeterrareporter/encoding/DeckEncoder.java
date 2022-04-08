@@ -2,9 +2,9 @@ package com.runeterrareporter.encoding;
 
 import java.util.*;
 
-import org.apache.commons.codec.binary.Base32;
-
 import com.runeterrareporter.decks.Deck;
+import com.runeterrareporter.utils.Base32;
+import com.runeterrareporter.utils.Base32.DecodingException;
 
 /**
  * Allows encoding and decoding of a deck to the deck code format.
@@ -34,7 +34,7 @@ public class DeckEncoder {
     for (int i = 0; i < values.size(); i++) {
       output[i] = values.get(i).byteValue();
     }
-    return new Base32().encodeAsString(output).replace("=", "");
+    return Base32.encode(output).replace("=", "");
   }
 
   /**
@@ -45,7 +45,12 @@ public class DeckEncoder {
    */
   public Deck decode(String deckCode) {
     ArrayList<Integer> bytes = new ArrayList<>();
-    byte[] decode = new Base32().decode(deckCode);
+    byte[] decode = new byte[0];
+    try {
+      decode = Base32.decode(deckCode);
+    } catch (DecodingException e) {
+      e.printStackTrace();
+    }
     for (byte data : decode) {
       bytes.add((int) data);
     }
