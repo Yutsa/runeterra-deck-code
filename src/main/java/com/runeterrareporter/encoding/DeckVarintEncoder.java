@@ -1,11 +1,10 @@
 package com.runeterrareporter.encoding;
 
-import java.util.*;
-
-import org.apache.commons.lang.StringUtils;
+import java.util.List;
 
 import com.runeterrareporter.cards.*;
 import com.runeterrareporter.decks.*;
+import com.runeterrareporter.utils.StringUtils;
 
 class DeckVarintEncoder {
 
