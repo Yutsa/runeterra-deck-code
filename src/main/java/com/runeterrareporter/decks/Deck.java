@@ -20,6 +20,7 @@ public class Deck {
     cards.addAll(cardCopies);
   }
 
+
   public void addCard(final CardCopies... cardCopies) {
     cards.addAll(Arrays.asList(cardCopies));
   }

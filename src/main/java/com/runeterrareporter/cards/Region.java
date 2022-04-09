@@ -32,6 +32,7 @@ public enum Region {
     this.minimumDeckCodeVersion = minimumDeckCodeVersion;
   }
 
+
   public static Region fromString(final String regionCode) {
     return Arrays.stream(values())
                  .filter(region -> region.getRegionCode().equals(regionCode))

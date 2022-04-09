@@ -20,6 +20,12 @@ public class Card {
     this.cardNumber = cardNumber;
   }
 
+  /**
+   * Creates a {@link Card card} from a card code
+   * @param code A card code with the format RELEASE_SET + REGION_ID + CARD_ID. For instance "01DE001" for a card from
+   *             the first release set (Foundation), in the Demacia region with ID 001.
+   * @return An instance of {@link Card} created by the code.
+   */
   public static Card fromCode(final String code) {
     String setCode = code.substring(0, 2);
     String regionCode = code.substring(2, 4);
